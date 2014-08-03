@@ -32,20 +32,21 @@ if( defined($opts{'l'}) )
 {
 	$outfile = $opts{'l'};
   if( defined($opts{'a'}) ){
-    open $OUT5,">>",$outfile or die "cannot open > $outfile: $!";
+    open $OUT,">>",$outfile or die "cannot open > $outfile: $!";
   }
   else{
-  open $OUT5,">",$outfile or die "cannot open > $outfile: $!";
+  open $OUT,">",$outfile or die "cannot open > $outfile: $!";
   }
-  autoflush $OUT5 1;
+  autoflush $OUT 1;
 }
 
 #so that it works properly in pipelines
 #$|=1;
 autoflush STDOUT 1;
 
-printf "making connection to host $host  port $port\n";
-printf(OUT "making connection to host $host  port $port\n");
+if(-t STDOUT){
+  printf "making connection to host $host  port $port\n";
+  }
 
 my $sock = new IO::Socket::INET (
                                   PeerAddr => $host,
@@ -54,7 +55,9 @@ my $sock = new IO::Socket::INET (
                                  );
 die "Could not create socket: $!\n" unless $sock;
 
-printf "connected to host $host port $port\n";
+if(-t STDOUT){
+  printf "connected to host %s port %s\n",$host,$port;
+  }
 
 while ( $line = $sock->getline() )
 {
@@ -70,9 +73,12 @@ while ( $line = $sock->getline() )
 
 	$stamp = sprintf "%04.4d%02.2d%02.2d %2.2d:%2.2d:%2.2d.%3.3d",
 		$year+1900,$mon,$mday,$hour,$min,$sec,$milisec;
-	printf $one.$stamp."\t".$three."\n";
-  if($OUT5){
-	  printf($OUT5 $one.$stamp."\t".$three."\n");
+#  $p=$one."\t".$stamp."\t".$three."\n";
+  $p="$one$stamp\t$three\n";
+	print $p;
+  if($OUT){
+	  #printf($OUT "%s\t%s\t%s\n",$one,$stamp,$three);
+	  print($OUT $p);
     }
 }
 close($sock);

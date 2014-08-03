@@ -73,11 +73,9 @@ while ( $line = $sock->getline() )
 
 	$stamp = sprintf "%04.4d%02.2d%02.2d %2.2d:%2.2d:%2.2d.%3.3d",
 		$year+1900,$mon,$mday,$hour,$min,$sec,$milisec;
-#  $p=$one."\t".$stamp."\t".$three."\n";
   $p="$one$stamp\t$three\n";
 	print $p;
   if($OUT){
-	  #printf($OUT "%s\t%s\t%s\n",$one,$stamp,$three);
 	  print($OUT $p);
     }
 }

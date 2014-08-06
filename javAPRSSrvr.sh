@@ -28,6 +28,7 @@ PORTLOCKFILE=/var/lock/LCK..$PORT
 # to install, run these commands substituting values from above to setup the daemon and serial port access
 # ln -s /etc/alternatives/java <DAEMON>
 # adduser <USER> dialout
+# update-rc.d javAPRSSrvr.sh defaults
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0

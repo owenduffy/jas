@@ -12,8 +12,6 @@
 # Author: Owen Duffy
 #
 
-# Do NOT "set -e"
-
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 NAME="javAPRSSrvr"
@@ -26,6 +24,10 @@ PIDFILE=/var/run/$NAME.pid
 USER=owen
 PORT=ttyUSB0
 PORTLOCKFILE=/var/lock/LCK..$PORT
+
+# to install, run these commands substituting values from above to setup the daemon and serial port access
+# ln -s /etc/alternatives/java <DAEMON>
+# adduser <USER> dialout
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0

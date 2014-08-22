@@ -17,11 +17,11 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 NAME="javAPRSSrvr"
 DESC="javAPRSSrvr"
 SCRIPTNAME=/etc/init.d/$NAME
-APPDIR=/home/owen/JAS
+APPDIR=/home/aprs/JAS
 DAEMON=$APPDIR/$NAME
 DAEMON_ARGS="-jar $NAME.jar"
 PIDFILE=/var/run/$NAME.pid
-USER=owen
+USER=aprs
 PORT=ttyUSB0
 PORTLOCKFILE=/var/lock/LCK..$PORT
 

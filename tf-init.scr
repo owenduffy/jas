@@ -1,0 +1,40 @@
+print Check current mode...
+send ""
+expect {
+ "*" goto kisson
+ timeout 1 goto endkiss
+}
+exit
+
+endkiss:
+print Try to end KISS mode (could be in SMACK)...
+! /bin/echo -ne "\xc0\xff\xc0"
+expect {
+ "(DC0A)" goto gottf
+ timeout 5
+}
+
+swh:
+print Something wrong here?
+sleep 5
+exit
+
+gottf:
+send ""
+expect {
+ "*" goto kisson
+ timeout 1 goto swh 
+}
+exit
+
+kisson:
+print
+print Start KISS...
+! /bin/echo -ne "\0d\x1b@K\x0d"
+sleep 1
+print Configure KISS...
+! /bin/echo -ne "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
+print All done!
+exit
+
+

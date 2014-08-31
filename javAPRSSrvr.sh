@@ -60,6 +60,8 @@ do_start()
 	start-stop-daemon --start --quiet --pidfile $PIDFILE -b -d $APPDIR -c $USER --exec $DAEMON --test > /dev/null \
 		|| return 1
 	#rm -f $APPDIR/err.log.* 
+	#initialise TNC
+	/home/aprs/JAS/tnc2-init.expect /dev/$PORT 
 	start-stop-daemon --start --quiet --pidfile $PIDFILE -m -b -d $APPDIR -c $USER --exec $DAEMON -- \
 		$DAEMON_ARGS \
 		|| return 2
@@ -93,6 +95,8 @@ do_stop()
 	rm -f $PIDFILE
 	# daemon doesn't delete port lock file
 	rm -f $PORTLOCKFILE
+	#reset TNC
+	/home/aprs/JAS/tnc2-rst.expect /dev/$PORT 
 	return "$RETVAL"
 }
 

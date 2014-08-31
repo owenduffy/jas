@@ -1,8 +1,5 @@
 #!/usr/bin/expect
 
-#script to set TNC-2 to KISS mode
-#2014-08-30 Owen Duffy
-
 encoding system iso8859-1
 
 #set port /dev/ttyUSB0
@@ -19,40 +16,40 @@ set timeout 1
 send "\x03\x0d"
 expect {
   -ex "cmd:" {
-#    send_tty "\n"
-#    send_tty "Start KISS...\n"
+    #send_tty "\n"
+    #send_tty "Start KISS...\n"
     send "KISS ON\x0d"
     send "RESTART\x0d"
     sleep 2
-#    send_tty "Configure KISS...\n"
+    #send_tty "Configure KISS...\n"
     send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
-#    send_tty "All done!\n"
+    #send_tty "All done!\n"
     exit
     }
   timeout {
-#    send_tty "Try to end KISS mode...\n"
+    #send_tty "Try to end KISS mode...\n"
     set timeout 10
     send "\xc0\xff\xc0"
     expect {
         "cmd:" {
-#        send_tty "Start KISS...\n"
+        #send_tty "Start KISS...\n"
         set timeout 1
-#        send_tty "Start KISS 2...\n"
+        #send_tty "Start KISS 2...\n"
         send "KISS ON\x0d"
         send "RESTART\x0d"
         sleep 2
-#        send_tty "Configure KISS...\n"
+        #send_tty "Configure KISS...\n"
         send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
-#        send_tty "All done!\n"
+        #send_tty "All done!\n"
         exit
         }
     timeout {
         set timeout 1
-        send_tty "Something wrong here..."
+        #send_tty "Something wrong here..."
         exit
         }
       }
     }
   }
-send_tty "Unexpected exit...\n"
+#send_tty "Unexpected exit...\n"
 exit

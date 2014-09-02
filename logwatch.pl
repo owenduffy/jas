@@ -13,20 +13,21 @@
 use IO::Socket;
 use Getopt::Std;
 
+#defaults
+$host=localhost;
+$port=14502;
+
 getopts('ah:l:p:',\%opts);
 
 if( defined($opts{'h'}) )
 {
 	$host = $opts{'h'};
 }
-else { usage(); }
 
 if( defined($opts{'p'}) )
 {
 	$port = $opts{'p'};
 }
-else { usage(); }
-
 
 if( defined($opts{'l'}) )
 {
@@ -87,3 +88,4 @@ sub usage
 	printf STDERR "usage: $0 -h host -p port [-l outputfile -a]\n";
 	exit -1;
 }
+

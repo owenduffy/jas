@@ -5,6 +5,13 @@
 
 encoding system iso8859-1
 
+log_file /home/aprs/JAS/expect.log
+set line "\n\n\n***** "
+append line [timestamp -format "%Y-%m-%d %H:%M:%S" -gmt]
+append line " Init starting...\n\n\n"
+append line "\n\n"
+send_log $line
+
 #set port /dev/ttyUSB0
 set port [lindex $argv 0]
 set spawned [spawn -open [open $port RDWR]]
@@ -19,40 +26,42 @@ set timeout 1
 send "\x0d"
 expect {
   -ex "* " {
-    #send_tty "\n"
-    #send_tty "Start KISS...\n"
-    #send_tty "got * \n"
+    send_log "\nStart KISS...\n"
     send "\x1b@K\x0d"
-    sleep 1
-    #send_tty "Configure KISS...\n"
+    sleep 2 
+    send_log "\nConfigure KISS...\n"
     send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
-    #send_tty "All done!\n"
+    send_log "All done!\n"
+    send_log "==========================================================\n\n"
     exit
     }
   timeout {
-    #send_tty "Try to end KISS mode (could be in SMACK)...\n"
+    send_log "\nTry to end KISS mode (could be in SMACK)...\n"
     set timeout 10
     send "\xc0\xff\xc0"
     expect {
         "Checksum" {
-        #send_tty "Start KISS...\n"
+        send_log "\nStart KISS...\n"
         send "\x0d"
         set timeout 1
-        #send_tty "Start KISS 2...\n"
+        send_log "\nStart KISS 2...\n"
         send "\x1b@K\x0d"
         sleep 1
-        #send_tty "Configure KISS...\n"
+        send_log "\nConfigure KISS...\n"
         send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
-        #send_tty "All done!\n"
+        send_log "All done!\n"
+        send_log "==========================================================\n\n"
         exit
         }
     timeout {
         set timeout 1
-        #send_tty "Something wrong here..."
+        send_log "Something wrong here..."
+        send_log "==========================================================\n\n"
         exit
         }
       }
     }
   }
-#send_tty "Unexpected exit...\n"
+send_log "Unexpected exit...\n"
+send_log "==========================================================\n\n"
 exit

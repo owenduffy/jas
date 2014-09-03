@@ -3,11 +3,11 @@
 
 encoding system iso8859-1
 
+#comment the following line for no logging
 log_file /home/aprs/JAS/expect.log
-set line "\n\n\n***** "
+set line "\n***** "
 append line [timestamp -format "%Y-%m-%d %H:%M:%S" -gmt]
-append line " Init starting...\n\n\n"
-append line "\n\n"
+append line " Init starting...\n\n"
 send_log $line
 
 #set port /dev/ttyUSB0
@@ -33,7 +33,7 @@ expect {
     send_log "\nConfigure KISS...\n"
     send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
     send_log "All done!\n"
-    send_log "==========================================================\n\n"
+    send_log "==========================================================\n"
     exit
     }
   timeout {
@@ -51,19 +51,19 @@ expect {
         send_log "\nConfigure KISS...\n"
         send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
         send_log "All done!\n"
-        send_log "==========================================================\n\n"
+        send_log "==========================================================\n"
         exit
         }
     timeout {
         set timeout 1
         send_log "Something wrong here..."
-        send_log "==========================================================\n\n"
+        send_log "==========================================================\n"
         exit
         }
       }
     }
   }
 send_log "Unexpected exit...\n"
-send_log "==========================================================\n\n"
+send_log "==========================================================\n"
 exit
 

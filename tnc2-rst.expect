@@ -5,11 +5,11 @@
 
 encoding system iso8859-1
 
-log_file /home/aprs/JAS/expect.log
-set line "\n\n\n***** "
+#comment the following line for no logging
+log_file /home/aprs/JAS/log/expect.log
+set line "\n***** "
 append line [timestamp -format "%Y-%m-%d %H:%M:%S" -gmt]
-append line " Rst starting...\n\n\n"
-append line "\n\n"
+append line " Rst starting...\n\n"
 send_log $line
 
 #set port /dev/ttyUSB0
@@ -23,5 +23,6 @@ set baud 9600
 stty ispeed $baud ospeed $baud raw -echo cs8 -parenb -cstopb -onlcr < $port
 
 send "\xc0\xff\xc0"
-send_log "==========================================================\n\n"
+send_log "\nAll done!\n"
+send_log "==========================================================\n"
 exit

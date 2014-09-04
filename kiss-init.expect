@@ -22,7 +22,11 @@ set baud 9600
 # -echo means no echo (full duplex?)
 stty ispeed $baud ospeed $baud raw -echo cs8 -parenb -cstopb -onlcr < $port
 
-send "\xc0\xff\xc0\0d"
+send_log "\nReset KISS...\n"
+send "\xc0\xff\xc0"
+after 500
+send_log "\nConfigure KISS...\n"
+send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
 send_log "\nAll done!\n"
 send_log "==========================================================\n"
 exit

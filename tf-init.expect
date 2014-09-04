@@ -60,7 +60,7 @@ expect {
         }
     timeout {
         set timeout 1
-        send_log "\nSomething wrong here..."
+        send_log "\nSomething wrong here...\n"
         send_log "==========================================================\n"
         exit
         }

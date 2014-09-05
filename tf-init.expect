@@ -26,11 +26,11 @@ set timeout 1
 #probe for command prompt
 #flush buffer
 expect -re $
-send "\x0d"
+send "\r"
 expect {
   -ex "* " {
     send_log "\nStart KISS...\n"
-    send "\x1b@K\x0d"
+    send "\x1b@K\r"
     sleep 2 
     send_log "\nConfigure KISS...\n"
     send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
@@ -47,10 +47,10 @@ expect {
     expect {
         "Checksum" {
         send_log "\nStart KISS...\n"
-        send "\x0d"
+        send "\r"
         set timeout 1
         send_log "\nStart KISS 2...\n"
-        send "\x1b@K\x0d"
+        send "\x1b@K\r"
         sleep 1
         send_log "\nConfigure KISS...\n"
         send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
@@ -62,11 +62,11 @@ expect {
         set timeout 1
         send_log "\nSomething wrong here...\n"
         send_log "==========================================================\n"
-        exit
+        exit 1
         }
       }
     }
   }
 send_log "\nUnexpected exit...\n"
 send_log "==========================================================\n\n"
-exit
+exit 2

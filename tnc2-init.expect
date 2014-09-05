@@ -25,12 +25,12 @@ send "\x03"
 after 2000
 #flush buffer
 expect -re $
-send "\x0d"
+send "\r"
 expect {
   -ex "cmd:" {
     send_log "\nStart KISS...\n"
-    send "KISS ON\x0d"
-    send "RESTART\x0d"
+    send "KISS ON\r"
+    send "RESTART\r"
     sleep 2
     send_log "\nConfigure KISS...\n"
     send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
@@ -49,8 +49,8 @@ expect {
         send_log "\nStart KISS...\n"
         set timeout 1
         send_log "\nStart KISS 2...\n"
-        send "KISS ON\x0d"
-        send "RESTART\x0d"
+        send "KISS ON\r"
+        send "RESTART\r"
         sleep 2
         send_log "\nConfigure KISS...\n"
         send "\xc0\x01\x10\xc0\x02\x40\xc0\x03\x0a\xc0\x04\x02\xc0"
@@ -62,12 +62,12 @@ expect {
         set timeout 1
         send_log "\nSomething wrong here...\n"
         send_log "==========================================================\n"
-        exit
+        exit 1
         }
       }
     }
   }
 send_log "Unexpected exit...\n"
 send_log "==========================================================\n"
-exit
+exit 2
 

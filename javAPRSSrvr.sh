@@ -61,7 +61,7 @@ do_start()
 		|| return 1
 	#rm -f $APPDIR/err.log.* 
 	#initialise TNC
-	[ -f $APPDIR/tnc-init ] && $APPDIR/tnc-init /dev/$PORT 
+	[ -f $APPDIR/tnc-init ] && $APPDIR/tnc-init /dev/$PORT || return 3
 	start-stop-daemon --start --quiet --pidfile $PIDFILE -m -b -d $APPDIR -c $USER --exec $DAEMON -- \
 		$DAEMON_ARGS \
 		|| return 2
@@ -96,7 +96,7 @@ do_stop()
 	# daemon doesn't delete port lock file
 	rm -f $PORTLOCKFILE
 	#reset TNC
-	[ -f $APPDIR/tnc-rst ] && $APPDIR/tnc-rst /dev/$PORT 
+	[ -f $APPDIR/tnc-rst ] && $APPDIR/tnc-rst /dev/$PORT || return 3
 	return "$RETVAL"
 }
 

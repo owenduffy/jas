@@ -4,7 +4,7 @@
 encoding system iso8859-1
 
 #comment the following line for no logging
-log_file /home/aprs/JAS/log/expect.log
+log_file /home/aprs/log/expect.log
 set line "\n***** "
 append line [timestamp -format "%Y-%m-%d %H:%M:%S" -gmt]
 append line " $argv0 starting...\n\n"
